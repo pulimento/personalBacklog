@@ -1,0 +1,26 @@
+.task-detail { min-width: 0; }
+.detail-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; margin-bottom: 1.2rem; }
+.detail-heading h2 { margin: 0; font-size: 1.35rem; letter-spacing: -0.025em; }
+.detail-id { margin: 0 0 0.45rem; color: var(--accent-dark, var(--rust)); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; }
+.detail-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; }
+.detail-actions button { min-height: auto; }
+.detail-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin: 0 0 1rem; }
+.detail-meta div { padding: 0.6rem 0.7rem; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.detail-meta dt { margin-bottom: 0.2rem; color: var(--muted); font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.detail-meta dd { margin: 0; font-size: 0.82rem; font-weight: 750; }
+.detail-meta .detail-tags { grid-column: 1 / -1; }
+.detail-tags dd { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag { padding: 0.18rem 0.42rem; border-radius: 999px; color: var(--accent-dark, var(--rust)); background: #f7ded5; font-size: 0.72rem; }
+.detail-body.markdown-preview { min-height: 0; }
+.markdown-preview { padding: 0.8rem; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); line-height: 1.5; overflow-wrap: anywhere; }
+.markdown-preview > :last-child { margin-bottom: 0; }
+.markdown-preview h1, .markdown-preview h2, .markdown-preview h3 { margin: 1.1em 0 0.4em; font-family: Georgia, "Times New Roman", serif; letter-spacing: -0.02em; }
+.markdown-preview h1 { font-size: 1.55rem; }
+.markdown-preview h2 { font-size: 1.25rem; }
+.markdown-preview h3 { font-size: 1.05rem; }
+.markdown-preview p, .markdown-preview ul, .markdown-preview ol { margin: 0 0 0.8rem; }
+.markdown-preview code { padding: 0.08rem 0.25rem; border-radius: 4px; background: #eee9df; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; }
+.markdown-preview a { color: var(--blue); }
+.detail-timestamps { margin: 1rem 0 0; color: var(--muted); font-size: 0.72rem; }
+.detail-empty { color: var(--muted); font-style: italic; }
+@media (max-width: 520px) { .detail-heading { flex-direction: column; } .detail-actions { justify-content: flex-start; } .detail-meta { grid-template-columns: 1fr; } }

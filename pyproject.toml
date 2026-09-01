@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "personal-backlog"
+version = "0.3.3"
+description = "A tiny, Git-friendly Markdown backlog for personal projects"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "pulimento" }]
+keywords = ["backlog", "markdown", "git", "cli", "ai-agents", "task-management", "codex"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Utilities",
+  "Topic :: Software Development :: Bug Tracking",
+]
+
+[project.urls]
+Homepage = "https://github.com/pulimento/personalBacklog"
+Repository = "https://github.com/pulimento/personalBacklog"
+Issues = "https://github.com/pulimento/personalBacklog/issues"
+
+[project.scripts]
+backlog = "personal_backlog.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+personal_backlog = ["web/*", "board_web/*", "task_web/*", "assistant_assets/*"]

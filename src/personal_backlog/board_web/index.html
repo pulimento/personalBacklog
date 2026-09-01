@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A read-only three-column view of a Personal Backlog.">
+    <title>Backlog board</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/task-detail.css">
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="identity">
+        <p class="eyebrow">PERSONAL BACKLOG</p>
+        <h1><span id="project-name">Project</span> board</h1>
+        <p id="backlog-path" class="path">Loading backlog…</p>
+      </div>
+
+      <div class="controls" aria-label="Board controls">
+        <label for="release-filter">Release</label>
+        <div class="control-row">
+          <select id="release-filter">
+            <option value="">All releases</option>
+          </select>
+          <button id="refresh" type="button">Refresh</button>
+        </div>
+        <p id="summary" class="summary" aria-live="polite">Loading tasks…</p>
+      </div>
+    </header>
+
+    <main class="board" aria-label="Task board">
+      <section class="lane lane-todo" aria-labelledby="todo-heading">
+        <header class="lane-heading">
+          <div>
+            <p class="lane-kicker"><span class="status-dot"></span>Queue</p>
+            <h2 id="todo-heading">Todo</h2>
+          </div>
+          <span id="todo-count" class="lane-count">0</span>
+        </header>
+        <div id="todo-cards" class="cards"></div>
+      </section>
+
+      <section class="lane lane-in-progress" aria-labelledby="in-progress-heading">
+        <header class="lane-heading">
+          <div>
+            <p class="lane-kicker"><span class="status-dot"></span>Active</p>
+            <h2 id="in-progress-heading">In progress</h2>
+          </div>
+          <span id="in-progress-count" class="lane-count">0</span>
+        </header>
+        <div id="in-progress-cards" class="cards"></div>
+      </section>
+
+      <section class="lane lane-done" aria-labelledby="done-heading">
+        <header class="lane-heading">
+          <div>
+            <p class="lane-kicker"><span class="status-dot"></span>Complete</p>
+            <h2 id="done-heading">Done</h2>
+          </div>
+          <span id="done-count" class="lane-count">0</span>
+        </header>
+        <div id="done-cards" class="cards"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p><span class="read-only-mark" aria-hidden="true"></span>Read only</p>
+      <p>Markdown remains the source of truth <span id="version"></span></p>
+    </footer>
+
+    <template id="task-card-template">
+      <article class="task-card">
+        <div class="card-topline">
+          <span class="task-id"></span>
+          <span class="priority"></span>
+        </div>
+        <h3></h3>
+        <dl class="task-meta">
+          <div>
+            <dt>Release</dt>
+            <dd class="release"></dd>
+          </div>
+          <div>
+            <dt>Size</dt>
+            <dd class="size"></dd>
+          </div>
+          <div class="tags" hidden>
+            <dt>Tags</dt>
+            <dd></dd>
+          </div>
+        </dl>
+      </article>
+    </template>
+
+    <dialog id="task-dialog" class="task-dialog" aria-label="Task details">
+      <div id="task-detail"></div>
+    </dialog>
+
+    <script src="/task-detail.js" defer></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

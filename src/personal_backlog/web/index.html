@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Backlog</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/task-detail.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="identity">
+        <p class="eyebrow">PERSONAL BACKLOG</p>
+        <h1><span id="project-name">Project</span></h1>
+        <p id="backlog-path" class="path">Loading…</p>
+      </div>
+
+      <div class="toolbar" aria-label="Backlog controls">
+        <div class="view-switcher" role="group" aria-label="View switcher">
+          <button id="view-board-btn" class="switch-btn active" type="button" aria-pressed="true">Board</button>
+          <button id="view-editor-btn" class="switch-btn" type="button" aria-pressed="false">Editor</button>
+        </div>
+
+        <div class="filter-group">
+          <label for="release-filter">Release</label>
+          <select id="release-filter">
+            <option value="">All releases</option>
+          </select>
+        </div>
+
+        <label class="readonly-switch" id="readonly-switch-container" title="Toggle read-only mode">
+          <input type="checkbox" id="readonly-toggle">
+          <span class="toggle-slider"></span>
+          <span id="readonly-status-text" class="readonly-label">Read only</span>
+        </label>
+
+        <div class="action-group">
+          <button id="refresh-btn" class="secondary" type="button">Refresh</button>
+          <button id="new-task" class="primary" type="button">+ New task</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="status-bar">
+      <p id="summary" class="summary" aria-live="polite">Loading tasks…</p>
+    </div>
+
+    <main class="main-content">
+      <!-- Kanban Board View -->
+      <section id="board-view" class="board" aria-label="Task board">
+        <section class="lane lane-todo" aria-labelledby="todo-heading">
+          <header class="lane-heading">
+            <div>
+              <p class="lane-kicker"><span class="status-dot"></span>Queue</p>
+              <h2 id="todo-heading">Todo</h2>
+            </div>
+            <span id="todo-count" class="lane-count">0</span>
+          </header>
+          <div id="todo-cards" class="cards"></div>
+        </section>
+
+        <section class="lane lane-in-progress" aria-labelledby="in-progress-heading">
+          <header class="lane-heading">
+            <div>
+              <p class="lane-kicker"><span class="status-dot"></span>Active</p>
+              <h2 id="in-progress-heading">In progress</h2>
+            </div>
+            <span id="in-progress-count" class="lane-count">0</span>
+          </header>
+          <div id="in-progress-cards" class="cards"></div>
+        </section>
+
+        <section class="lane lane-done" aria-labelledby="done-heading">
+          <header class="lane-heading">
+            <div>
+              <p class="lane-kicker"><span class="status-dot"></span>Complete</p>
+              <h2 id="done-heading">Done</h2>
+            </div>
+            <span id="done-count" class="lane-count">0</span>
+          </header>
+          <div id="done-cards" class="cards"></div>
+        </section>
+      </section>
+
+      <!-- List & Editor View -->
+      <section id="editor-view" class="workspace" aria-label="Task list and editor" hidden>
+        <section class="task-browser" aria-label="Tasks">
+          <div class="filters">
+            <label>
+              <span>State</span>
+              <select id="state-filter">
+                <option value="">All states</option>
+                <option value="todo">Todo</option>
+                <option value="in_progress">In progress</option>
+                <option value="done">Done</option>
+              </select>
+            </label>
+            <p id="task-count" class="task-count"></p>
+          </div>
+          <div id="task-list" class="task-list" aria-live="polite"></div>
+        </section>
+
+        <aside id="editor" class="editor" aria-label="Task editor">
+          <div id="empty-editor" class="empty-editor">
+            <p class="empty-mark">↗</p>
+            <h2>Select a task</h2>
+            <p id="empty-editor-text">Choose something from the backlog, or create a new task.</p>
+          </div>
+
+          <div id="task-detail" hidden></div>
+
+          <form id="task-form" hidden>
+            <div class="editor-heading">
+              <div>
+                <p id="task-id" class="eyebrow">NEW TASK</p>
+                <h2 id="editor-title">Add to the backlog</h2>
+              </div>
+              <button id="close-editor" class="icon-button" type="button" aria-label="Close editor">×</button>
+            </div>
+
+            <label class="wide-field">
+              <span>Title</span>
+              <input id="title" name="title" required maxlength="240" autocomplete="off">
+            </label>
+
+            <div class="metadata-grid">
+              <label>
+                <span>State</span>
+                <select id="state" name="state">
+                  <option value="todo">Todo</option>
+                  <option value="in_progress">In progress</option>
+                  <option value="done">Done</option>
+                </select>
+              </label>
+              <label>
+                <span>Priority</span>
+                <input id="priority" name="priority" type="number" min="1" max="5" step="1" required>
+              </label>
+              <label>
+                <span>Size</span>
+                <select id="size" name="size">
+                  <option value="">None</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                </select>
+              </label>
+              <label>
+                <span>Release</span>
+                <input id="release" name="release" placeholder="next or 1.0.0">
+              </label>
+              <label class="tags-field">
+                <span>Tags <small>optional, comma-separated</small></span>
+                <input id="tags" name="tags" placeholder="bug, ios">
+              </label>
+            </div>
+
+            <label class="wide-field body-field">
+              <span>Notes <small>Markdown</small> <button id="preview-toggle" class="text-button" type="button" aria-pressed="false">Preview</button></span>
+              <textarea id="body" name="body" placeholder="## Context&#10;&#10;Why does this matter?&#10;&#10;## Desired outcome"></textarea>
+              <article id="body-preview" class="markdown-preview" hidden aria-label="Markdown preview"></article>
+            </label>
+
+            <p id="timestamps" class="timestamps"></p>
+            <div class="form-actions">
+              <button id="cancel" class="secondary" type="button">Cancel</button>
+              <button class="primary" type="submit">Save task</button>
+            </div>
+          </form>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      <p id="footer-mode"><span class="status-dot"></span><span id="footer-mode-text">Read / Write mode</span></p>
+      <p>Markdown remains the source of truth <span id="version"></span></p>
+    </footer>
+
+    <template id="task-card-template">
+      <article class="board-card">
+        <div class="card-topline">
+          <span class="task-id"></span>
+          <span class="priority"></span>
+        </div>
+        <h3></h3>
+        <dl class="task-meta">
+          <div>
+            <dt>Release</dt>
+            <dd class="release"></dd>
+          </div>
+          <div>
+            <dt>Size</dt>
+            <dd class="size"></dd>
+          </div>
+          <div class="tags" hidden>
+            <dt>Tags</dt>
+            <dd></dd>
+          </div>
+        </dl>
+      </article>
+    </template>
+
+    <dialog id="task-dialog" class="task-dialog" aria-label="Task details">
+      <div id="dialog-task-detail"></div>
+    </dialog>
+
+    <div id="message" class="message" role="status" aria-live="polite"></div>
+    <script src="/task-detail.js" defer></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

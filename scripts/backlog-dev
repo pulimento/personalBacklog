@@ -1,0 +1,8 @@
+#!/bin/sh
+# Run the command from this checkout's src/ tree, never the installed package.
+set -eu
+
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+project_root=$(CDPATH= cd -- "$script_dir/.." && pwd)
+
+exec env PYTHONPATH="$project_root/src" python3 -m personal_backlog "$@"
