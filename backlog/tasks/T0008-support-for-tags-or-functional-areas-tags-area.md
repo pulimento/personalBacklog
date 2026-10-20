@@ -19,3 +19,7 @@ Allow assigning tags or an area to tasks via structured metadata and CLI flag (e
 - Optional field compatible with backlog invariants.
 - Ability to filter in `backlog list` by tag/area.
 - Compatible with web views and CLI.
+
+## Windows CLI regression fixed (2026-10-20)
+
+Updating repeatable tags previously crashed because argparse received the MISSING object as its append default. Use None during parsing and translate omission back to MISSING. Regression coverage replaces tags, preserves them during unrelated updates, and clears them. This enables explicit agent-approved markers without new schema fields.

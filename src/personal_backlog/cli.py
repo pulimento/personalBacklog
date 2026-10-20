@@ -166,7 +166,7 @@ def build_parser() -> argparse.ArgumentParser:
     update_parser.add_argument("--size", choices=(*SIZES, "none"), default=MISSING)
     update_parser.add_argument("--state", choices=STATES, default=MISSING)
     update_tags = update_parser.add_mutually_exclusive_group()
-    update_tags.add_argument("--tag", dest="tags", action="append", default=MISSING, metavar="TAG")
+    update_tags.add_argument("--tag", dest="tags", action="append", default=None, metavar="TAG")
     update_tags.add_argument("--clear-tags", dest="tags", action="store_const", const=[])
     update_parser.add_argument("--body")
     update_parser.add_argument("--body-file", metavar="PATH", help="read Markdown from PATH or -")
@@ -372,7 +372,7 @@ def run(args: argparse.Namespace) -> int:
             "priority": args.priority,
             "size": args.size,
             "state": args.state,
-            "tags": args.tags,
+            "tags": MISSING if args.tags is None else args.tags,
             "body": body,
         }
         if args.size == "none":
