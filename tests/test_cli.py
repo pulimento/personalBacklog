@@ -146,6 +146,14 @@ class CliTests(unittest.TestCase):
         code, output, error = self.command("add", "Tagged", "--tag", "bug", "--tag", "ios", "--json")
         self.assertEqual((code, error), (0, ""))
         self.assertEqual(json.loads(output)["tags"], ["bug", "ios"])
+        code, output, error = self.command(
+            "update", "1", "--tag", "agent-approved", "--tag", "android", "--json"
+        )
+        self.assertEqual((code, error), (0, ""))
+        self.assertEqual(json.loads(output)["tags"], ["agent-approved", "android"])
+        code, output, error = self.command("update", "1", "--priority", "2", "--json")
+        self.assertEqual((code, error), (0, ""))
+        self.assertEqual(json.loads(output)["tags"], ["agent-approved", "android"])
         code, output, error = self.command("update", "1", "--clear-tags", "--json")
         self.assertEqual((code, error), (0, ""))
         self.assertNotIn("tags", json.loads(output))
